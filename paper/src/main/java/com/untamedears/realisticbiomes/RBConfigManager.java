@@ -64,6 +64,12 @@ public class RBConfigManager extends ConfigParser {
 
 	private List<Material> bonemealPreventedBlocks;
 
+	private boolean autoReplantEnabled;
+	public boolean isAutoReplantEnabled() { return this.autoReplantEnabled; }
+
+	private boolean autoReplantRightClick;
+	public boolean isAutoReplantRightClick() { return this.autoReplantRightClick; }
+
 	public RBConfigManager(ACivMod plugin) {
 		super(plugin);
 	}
@@ -119,6 +125,10 @@ public class RBConfigManager extends ConfigParser {
 		}
 	}
 
+	public void reload(ConfigurationSection config) {
+		parseInternal(config);
+	}
+
 	@Override
 	protected boolean parseInternal(ConfigurationSection config) {
 		hasPersistentGrowth = false;
@@ -131,6 +141,8 @@ public class RBConfigManager extends ConfigParser {
 		List<LStepConfig> rawConfigs = parseRawLStepConfigs(config.getConfigurationSection("l_steps"));
 		lTrees = parseLTrees(config.getConfigurationSection("l_trees"), rawConfigs);
 		bonemealPreventedBlocks = parseMaterialList(config, "no_bonemeal_blocks");
+		autoReplantEnabled = config.getBoolean("auto_replant_enabled", true);
+		autoReplantRightClick = config.getBoolean("auto_replant_right_click", true);
 		return true;
 	}
 

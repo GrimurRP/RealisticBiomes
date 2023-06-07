@@ -1,5 +1,6 @@
 package com.untamedears.realisticbiomes.replant;
 
+import com.untamedears.realisticbiomes.RBConfigManager;
 import com.untamedears.realisticbiomes.RealisticBiomes;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -33,18 +34,17 @@ import vg.civcraft.mc.civmodcore.players.settings.impl.BooleanSetting;
 
 public class AutoReplantListener implements Listener {
 
-	private final boolean rightClick;
-
+	private RBConfigManager configManager;
 	private BooleanSetting toggleAutoReplant;
 
-	public AutoReplantListener(boolean rightClick) {
-		this.rightClick = rightClick;
+	public AutoReplantListener(RBConfigManager configManager) {
+		this.configManager = configManager;
 		initSettings();
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onBlockBreak(BlockBreakEvent event) {
-		if (rightClick) {
+		if (!this.configManager.isAutoReplantEnabled() || this.configManager.isAutoReplantRightClick()) {
 			return;
 		}
 
@@ -69,9 +69,7 @@ public class AutoReplantListener implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onRightClick(PlayerInteractEvent event) {
-		if (!rightClick
-				|| event.getHand() != EquipmentSlot.HAND) // Process only the main hand (no need to show 'no perms' twice)
-		{
+		if (!this.configManager.isAutoReplantEnabled() || !this.configManager.isAutoReplantRightClick()) {
 			return;
 		}
 
@@ -229,9 +227,12 @@ public class AutoReplantListener implements Listener {
 		MenuSection rbMenu = PlayerSettingAPI.getMainMenu()
 				.createMenuSection("RealisticBiomes", "Auto replant setting", new ItemStack(
 						Material.WHEAT_SEEDS));
-		toggleAutoReplant = new BooleanSetting(RealisticBiomes.getInstance(), true, "Use auto replant?", "autoReplant",
-				rightClick ? "Will automatically harvest and replant a crop when right clicked" : "Will automatically take seeds from your inventory and replant crops");
-		PlayerSettingAPI.registerSetting(toggleAutoReplant, rbMenu);
+
+		String description = this.configManager.isAutoReplantRightClick()
+				? "Will automatically harvest and replant a crop when right clicked"
+				: "Will automatically take seeds from your inventory and replant crops";
+
+		toggleAutoReplant = new BooleanSetting(RealisticBiomes.getInstance(), true, "Use auto replant?", "autoReplant", description);		PlayerSettingAPI.registerSetting(toggleAutoReplant, rbMenu);
 	}
 
 	public boolean getToggleAutoReplant(UUID uuid) {

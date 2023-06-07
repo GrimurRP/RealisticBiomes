@@ -23,6 +23,10 @@ public class PlantLogicManager {
 	private Set<Material> columnBlocks;
 
 	public PlantLogicManager(PlantManager plantManager, GrowthConfigManager growthConfigManager) {
+		reload(plantManager, growthConfigManager);
+	}
+
+	public void reload(PlantManager plantManager, GrowthConfigManager growthConfigManager) {
 		this.plantManager = plantManager;
 		this.growthConfigManager = growthConfigManager;
 		initAdjacentPlantBlocks(growthConfigManager.getAllGrowthConfigs());
@@ -175,6 +179,9 @@ public class PlantLogicManager {
 	}
 
 	private void initAdjacentPlantBlocks(Set<PlantGrowthConfig> growthConfigs) {
+		Set<Material> fruitBlocks = null;
+		Set<Material> columnBlocks = null;
+
 		for (PlantGrowthConfig config : growthConfigs) {
 			if (config.getGrower() instanceof FruitGrower) {
 				FruitGrower grower = (FruitGrower) config.getGrower();
@@ -200,6 +207,9 @@ public class PlantLogicManager {
 				columnBlocks.add(grower.getStemMaterial());
 			}
 		}
+
+		this.fruitBlocks = fruitBlocks;
+		this.columnBlocks = columnBlocks;
 	}
 
 	public void handlePlantCreation(Block block, ItemStack itemUsed) {
@@ -260,7 +270,7 @@ public class PlantLogicManager {
 	}
 	
 	public Block remapColumnBlock(Block block, PlantGrowthConfig growthConfig, Material material) {
-		if (!columnBlocks.contains(block.getType())) {
+		if (columnBlocks == null || !columnBlocks.contains(block.getType())) {
 			return block;
 		}
 		if (growthConfig.getGrower() instanceof VerticalGrower) {

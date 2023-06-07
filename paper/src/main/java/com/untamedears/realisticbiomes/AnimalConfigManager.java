@@ -11,6 +11,10 @@ public class AnimalConfigManager {
 		entityMap = new HashMap<>();
 	}
 
+	public void reload() {
+
+	}
+
 	public AnimalMateConfig getAnimalMateConfig(EntityType entity) {
 		return entityMap.get(entity);
 	}

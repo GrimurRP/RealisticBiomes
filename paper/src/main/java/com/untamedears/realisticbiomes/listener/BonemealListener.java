@@ -2,6 +2,7 @@ package com.untamedears.realisticbiomes.listener;
 
 import java.util.Collection;
 import java.util.EnumSet;
+import java.util.HashSet;
 import java.util.Set;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -18,7 +19,13 @@ public class BonemealListener implements Listener {
 	private Set<Material> preventedMaterials;
 
 	public BonemealListener(Collection<Material> preventedMaterials) {
-		this.preventedMaterials = EnumSet.copyOf(preventedMaterials);
+		reload(preventedMaterials);
+	}
+
+	public void reload(Collection<Material> preventedMaterials) {
+		this.preventedMaterials = preventedMaterials.isEmpty()
+				? new HashSet<>()
+				: EnumSet.copyOf(preventedMaterials);
 	}
 
 	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)

@@ -18,6 +18,7 @@ public class RBCommandManager extends CommandManager {
 	@Override
 	public void registerCommands() {
 		registerCommand(new Menu());
+		registerCommand(new Utility());
 	}
 
 	@Override

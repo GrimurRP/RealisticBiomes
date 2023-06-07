@@ -14,9 +14,13 @@ import org.bukkit.event.entity.ItemSpawnEvent;
 
 public class AnimalListener implements Listener {
 
-	private final AnimalConfigManager animalManager;
+	private AnimalConfigManager animalManager;
 
 	public AnimalListener(AnimalConfigManager animalManager) {
+		reload(animalManager);
+	}
+
+	public void reload(AnimalConfigManager animalManager) {
 		this.animalManager = animalManager;
 	}
 

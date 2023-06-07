@@ -37,7 +37,12 @@ public class PlayerListener implements Listener {
 	private DecimalFormat decimalFormat = new DecimalFormat("0.####");
 
 	public PlayerListener(GrowthConfigManager growthConfigs, AnimalConfigManager animalManager,
-			PlantManager plantManager) {
+						  PlantManager plantManager) {
+		reload(growthConfigs, animalManager, plantManager);
+	}
+
+	public void reload(GrowthConfigManager growthConfigs, AnimalConfigManager animalManager,
+					   PlantManager plantManager) {
 		this.growthConfigs = growthConfigs;
 		this.animalManager = animalManager;
 		this.plantManager = plantManager;
