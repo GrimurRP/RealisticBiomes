@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-	paperDevBundle("1.19.4-R0.1-SNAPSHOT")
+	paperDevBundle("1.20-R0.1-SNAPSHOT")
 
     compileOnly("net.civmc.civmodcore:civmodcore-paper:2.3.0:dev-all")
 	compileOnly("com.sk89q.worldedit:worldedit-bukkit:7.2.8")

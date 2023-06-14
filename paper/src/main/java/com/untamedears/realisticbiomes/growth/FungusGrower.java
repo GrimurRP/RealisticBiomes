@@ -10,8 +10,8 @@ import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import org.bukkit.Material;
 import org.bukkit.TreeType;
 import org.bukkit.block.Block;
-import org.bukkit.craftbukkit.v1_19_R3.CraftWorld;
-import org.bukkit.craftbukkit.v1_19_R3.util.RandomSourceWrapper;
+import org.bukkit.craftbukkit.v1_20_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_20_R1.util.RandomSourceWrapper;
 
 import java.util.Random;
 
